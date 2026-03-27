@@ -22,7 +22,7 @@ def validate_input(input: str) -> bool:
 class SinglePlay:
     def __init__(self, word: str):
         self.word_list = list(word)
-        self.word_list_lowererd_set = set(word.lower())
+        self.word_list_lowererd_set = set(word.lower().replace(" ", ""))
         self.correct_guesses = set([])
         self.faulty_guesses = set([])
 

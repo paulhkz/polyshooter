@@ -9,7 +9,7 @@ class Story:
 
     def handle_incorrect_guess(self):
         self.rem_guesses -= 1
-        if rem_guesses == 0:
+        if self.rem_guesses == 0:
             self.handle_game_over()
         else:
             print("guesses left:", rem_guesses)
