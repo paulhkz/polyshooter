@@ -1,5 +1,5 @@
 from word_retriever import WordRetriever
-from story import Story
+from story import Story, SolidHasHit
 import os
 import sys
 
@@ -12,9 +12,14 @@ class Logic:
         single_play = SinglePlay(word)
         print(word)
         while True:
-            os.system("clear")
-            
-            single_play.guess_once()
+            try:
+                os.system("clear")
+                
+                single_play.guess_once()
+            except SolidHasHit:
+                print("💥")
+                os.kill(os.getpid(), 14)
+                break
 
 def validate_input(input: str) -> bool:
     """
@@ -54,14 +59,10 @@ class SinglePlay:
                 if character not in self.correct_guesses:
                     self.correct_guesses.add(character)
                     self.story.handle_correct_guess()
-                else:
-                    self.story.handle_correct_guess()
 
             else:
                 if character not in self.faulty_guesses:
                     self.faulty_guesses.add(character)
-                    self.story.handle_incorrect_guess()
-                else:
                     self.story.handle_incorrect_guess()
 
         if len(self.correct_guesses) == len(self.word_list_lowererd_set):

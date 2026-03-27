@@ -67,7 +67,7 @@ class Story:
         # TODO
         pass
         
-    def display_last_guess_stats(self, correct: set, faulty: set):
+    def display_last_guess_stats(self, correct: set(str), faulty: set(str)):
         self.current_stats.show(self.rem_guesses, correct, faulty)
         self.current_stats = CurrentStatsDisplay()
 
@@ -83,14 +83,31 @@ class CurrentStatsDisplay:
         self.faulty += 1
     
     def show(self, rem_guesses: int, correct: set(str), faulty: set(str)):
-        if self.correct == 1:
-            print("Richtig!!")
-        elif self.correct > 1:
-            print(f"Du hast {self.correct} Mal richtig geraten!")
+        if rem_guesses > 0:
+            if self.correct == 1:
+                print("Richtig! Du hast getroffen! Ein Teil des Körpers ist kaputt gegangen!")
+            elif self.correct > 1:
+                print(f"Du hast gerade {self.correct} Mal getroffen!")
 
-        if self.faulty == 1:
-            print("Oh nein, der Polyeder kommt näher!")
-        elif self.faulty > 1:
-            print(f"Du hast ganze {faulty} Mal falsch geraten! Pass auf!")
+            if self.faulty == 1:
+                print("Oh nein, der Polyeder kommt immer näher!")
+            elif self.faulty > 1:
+                print(f"Du hast ganze {faulty} Mal falsch geraten! Pass auf, er kommt näher!")
             
-        print(f"Noch {rem_guesses} Versuche verbleibend...")
+            if self.correct == 0 and self.faulty == 0:
+                print("Weder getroffen, noch daneben.")
+
+            print(f"Korrekte Buchstaben: {", ".join(correct)}")
+            print(f"Falsche Buchstaben: {" ".join(faulty)}")
+            print((DEFAULT_ATTEMPTS - rem_guesses) * 2 * "\n", end="")
+
+            print(f"{'〔Körper〕':^20}")
+            print(rem_guesses * 2 * "\n")
+            print(f"{'/ˉˉˉˉˉ〔Erde〕ˉˉˉˉˉ\\':^20}")
+            print(f"Noch {rem_guesses} Versuche verbleibend...")
+        else:
+            raise SolidHasHit
+
+class SolidHasHit(Exception):
+    def __init__(self):
+        super().__init__()
