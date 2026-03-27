@@ -1,0 +1,92 @@
+Quadratpyramide
+Fünfeckpyramide
+Dreieckskuppel
+Quadratkuppel
+Fünfeckskuppel
+Fünfecksrotunde
+verlängerte Dreieckpyramide
+verlängerte Quadratpyramide
+verlängerte Fünfeckpyramide
+verdreht verlängerte Quadratpyramide
+verdreht verlängerte Fünfeckpyramide
+Dreiecksbipyramide
+Fünfecksbipyramide
+verlängerte Dreiecksbipyramide
+verlängerte Quadratbipyramide
+verlängerte Fünfecksbipyramide
+verdreht verlängerte Quadratbipyramide
+verlängerte Dreieckskuppel
+verlängerte Quadratkuppel
+verlängerte Fünfeckskuppel
+verlängerte Fünfecksrotunde
+verdreht verlängerte Dreieckskuppel
+verdreht verlängerte Quadratkuppel
+verdreht verlängerte Fünfeckskuppel
+verdreht verlängerte Fünfecksrotunde
+verdrehter Doppelkeil
+Dreiecksdoppelkuppel
+Quadratdoppelkuppel
+verdrehte Quadratdoppelkuppel
+Fünfecksdoppelkuppel
+verdrehte Fünfecksdoppelkuppel
+Fünfeckskuppelrotunde
+verdrehte Fünfeckskuppelrotunde
+Fünfecksdoppelrotunde
+verlängerte Dreiecksdoppelkuppel
+verlängerte verdrehte Dreiecksdoppelkuppel
+verlängerte verdrehte Quadratsdoppelkuppel
+verlängerte Fünfecksdoppelkuppel
+verlängerte verdrehte Fünfecksdoppelkuppel
+verlängerte Fünfeckskuppelrotunde
+verlängerte verdrehte Fünfeckskuppelrotunde
+verlängerte Fünfecksdoppelrotunde
+verlängerte verdrehte Fünfecksdoppelrotunde
+verdreht verlängerte Dreiecksdoppelkuppel
+verdreht verlängerte Quadratdoppelkuppel
+verdreht verlängerte Fünfecksdoppelkuppel
+verdreht verlängerte Fünfeckskuppelrotunde
+verdreht verlängerte Fünfecksdoppelrotunde
+erweitertes Dreiecksprisma
+doppelt erweitertes Dreiecksprisma
+dreifach erweitertes Dreiecksprisma
+erweitertes Fünfecksprisma
+doppelt erweitertes Fünfecksprisma
+erweitertes Sechsecksprisma
+doppelt erweitertes Sechsecksprisma (para)
+doppelt erweitertes Sechsecksprisma (meta)
+dreifach erweitertes Sechsecksprisma
+erweitertes Dodekaeder
+doppelt erweitertes Dodekaeder (para)
+doppelt erweitertes Dodekaeder (meta)
+dreifach erweitertes Dodekaeder
+doppelt beschnittenes Ikosaeder (meta)
+dreifach beschnittenes Ikosaeder
+erweitertes dreifach beschnittenes Ikosaeder
+erweitertes abgestumpftes Tetraeder
+erweitertes abgestumpftes Hexaeder
+doppelt erweitertes abgestumpftes Hexaeder
+erweitertes abgestumpftes Dodekaeder
+doppelt erweitertes abgestumpftes Dodekaeder (para)
+doppelt erweitertes abgestumpftes Dodekaeder (meta)
+dreifach erweitertes abgestumpftes Dodekaeder
+verdrehtes Rhombenikosidodekaeder
+doppelt verdrehtes kleines Rhombenikosidodekaeder (para)
+doppelt verdrehtes kleines Rhombenikosidodekaeder (meta)
+dreifach verdrehtes kleines Rhombenikosidodekaeder
+beschnittenes kleines Rhombenikosidodekaeder
+verdrehtes beschnittenes kleines Rhombenikosidodekaeder (para)
+verdrehtes beschnittenes kleines Rhombenikosidodekaeder (meta)
+doppelt verdrehtes beschnittenes kleines Rhombenikosidodekaeder
+doppelt beschnittenes kleines Rhombenikosidodekaeder (para)
+doppelt beschnittenes kleines Rhombenikosidodekaeder (meta)
+verdrehtes doppelt beschnittenes kleines Rhombenikosidodekaeder
+dreifach beschnittenes kleines Rhombenikosidodekaeder
+Trigondodekaeder
+abgeschrägtes Quadratantiprisma
+Sphenocorona
+erweiterte Sphenocorona
+Sphenomegacorona
+Hebesphenomegacorona
+Disphenocingulum
+Bilunadoppelrotunde
+Dreieckshebesphenorotunde
