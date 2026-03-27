@@ -4,8 +4,12 @@ class WordRetriever:
     def __init__(self: WordRetriever):
         self.wordrepo = []
 
+        filepath = os.path.abspath(__file__)
+        dirpath = os.path.dirname(os.path.abspath(__file__))
+        datafile = os.path.join(dirpath, "wordrepo.txt")
+
         try:
-            with open('wordrepo.txt', 'r') as f:
+            with open(datafile, 'r') as f:
                 # Comment:
                 wordrepo = f.read()
                 self.wordrepo = wordrepo.splitlines()
