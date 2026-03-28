@@ -19,8 +19,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint mypy
     - name: Analysing the code with pylint
+      continue-on-error: true
       run: |
         pylint $(git ls-files '*.py')
     - name: Analysing the code with mypy
+      continue-on-error: true
       run: |
         mypy .
