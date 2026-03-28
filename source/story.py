@@ -1,15 +1,16 @@
 import os
 
-DEFAULT_ATTEMPTS = 3
+DEFAULT_ATTEMPTS = 4
 
 class Story:
-    def __init__(self):
+    def __init__(self) -> None:
         self.rem_guesses = DEFAULT_ATTEMPTS
-        self.current_stats = CurrentStatsDisplay()
+        self.__current_num_of_correct_hits = 0
+        self.__current_num_of_faulty_hits = 0
 
         self.show_prelude()
-    
-    def show_prelude(self):
+
+    def show_prelude(self) -> None:
         os.system("clear")
         os.system("clear")
 
@@ -18,7 +19,7 @@ class Story:
         Du und ein Team sind dabei, das ganze genauer zu inspezieren...
         """)
         print()
-        
+
         user_input = input(f"\r{'Enter drücken um weiter zu gehen, "s", um die Story zu überspringen':>150}")
         if user_input.lower().strip() == 's':
             return
@@ -28,13 +29,14 @@ class Story:
         Plötzlich seht ihr, wie Objekte aus diesem Portal kommen.
         Genauere Analysen zeigen, dass diese Objekte Johnson-Körper sind, das sind spezielle Polyeder.
         Ein Körper ist bereits auf die Erde eingeschlagen und hat ein riesiges Loch hinterlassen.
+        Nun kommt einer direkt auf euch zu. Wenn ihr ihn nicht aufhalten könnt, dann wars das.
         """)
         print()
 
         user_input = input(f"\r{'Enter drücken um weiter zu gehen, "s", um die Story zu überspringen':>150}")
         if user_input.lower().strip() == 's':
             return
-        
+
         os.system("clear")
         print("""
         Zum Glück habt ihr spezialisierte LASER, welcher jedes beliebige Objekt zu Grunde machen kann.
@@ -45,69 +47,63 @@ class Story:
         print()
 
         user_input = input(f"\r{'Enter drücken, um zu starten':>150}")
+        os.system("clear")
+        os.system("clear")
 
 
 
-    def handle_correct_guess(self):
-        self.current_stats.increase_correct()
+    def handle_correct_guess(self) -> None:
+        self.__current_num_of_correct_hits += 1
 
-    def handle_incorrect_guess(self):
+    def handle_incorrect_guess(self) -> None:
         self.rem_guesses -= 1
         if self.rem_guesses == 0:
             self.handle_game_over()
         else:
-            self.current_stats.increase_faulty()
-            
+            self.__current_num_of_faulty_hits += 1
 
-    def handle_game_over(self):
-        # TODO: Error?
-        pass
-        
-    def handle_earth_saved(self):
+
+    def handle_game_over(self) -> None:
+        print(f"{'':💥<20}")
+        raise SolidHasHit
+
+    def handle_earth_saved(self) -> None:
         # TODO
         pass
-        
-    def display_last_guess_stats(self, correct: set(str), faulty: set(str)):
-        self.current_stats.show(self.rem_guesses, correct, faulty)
-        self.current_stats = CurrentStatsDisplay()
 
-class CurrentStatsDisplay:
-    def __init__(self):
-        self.correct = 0
-        self.faulty = 0
-        
-    def increase_correct(self):
-        self.correct += 1
-    
-    def increase_faulty(self):
-        self.faulty += 1
-    
-    def show(self, rem_guesses: int, correct: set(str), faulty: set(str)):
-        if rem_guesses > 0:
-            if self.correct == 1:
-                print("Richtig! Du hast getroffen! Ein Teil des Körpers ist kaputt gegangen!")
-            elif self.correct > 1:
-                print(f"Du hast gerade {self.correct} Mal getroffen!")
+    def display_last_guess_stats(self, correct: set[str], faulty: set[str], hidden_word: str, correct_guesses_ratio: int, is_first_guess: bool = False) -> None:
+        if self.__current_num_of_correct_hits == 1:
+            print("Richtig! Der LASER konnte sich weiter kalibrieren.")
+        elif self.__current_num_of_correct_hits > 1:
+            print(f"Der LASER hat sich gerade {self.__current_num_of_correct_hits} Mal kalibrieren können!")
 
-            if self.faulty == 1:
-                print("Oh nein, der Polyeder kommt immer näher!")
-            elif self.faulty > 1:
-                print(f"Du hast ganze {faulty} Mal falsch geraten! Pass auf, er kommt näher!")
-            
-            if self.correct == 0 and self.faulty == 0:
-                print("Weder getroffen, noch daneben.")
+        if self.__current_num_of_faulty_hits == 1:
+            print("Oh nein, der LASER konnte sich nicht kalibrieren! Der Polyeder kommt immer näher!")
+        elif self.__current_num_of_faulty_hits > 1:
+            print(f"Du hast ganze {self.__current_num_of_faulty_hits} Mal falsch geraten! Pass auf, er kommt näher!")
 
-            print(f"Korrekte Buchstaben: {", ".join(correct)}")
-            print(f"Falsche Buchstaben: {" ".join(faulty)}")
-            print((DEFAULT_ATTEMPTS - rem_guesses) * 2 * "\n", end="")
+        if not is_first_guess and self.__current_num_of_correct_hits == 0 and self.__current_num_of_faulty_hits == 0:
+            print("Nichts ist passiert.")
 
-            print(f"{'〔Körper〕':^20}")
-            print(rem_guesses * 2 * "\n")
-            print(f"{'/ˉˉˉˉˉ〔Erde〕ˉˉˉˉˉ\\':^20}")
-            print(f"Noch {rem_guesses} Versuche verbleibend...")
-        else:
-            raise SolidHasHit
+        print(f"Korrekte Buchstaben: {", ".join(correct)}")
+        print(f"Falsche Buchstaben: {" ".join(faulty)}")
+
+        distance = f"[ DISTANZ: {self.rem_guesses * 12}.000 km ]"
+        correct_guesses_percentage = correct_guesses_ratio * 100
+
+        print(f"{distance:<40}", end="")
+        print((DEFAULT_ATTEMPTS - self.rem_guesses) * 2 * f"\n{' ' * 40}", end="")
+
+        print(f"{'〔Körper〕':^30}")
+        print((self.rem_guesses * 2 - 1) * "\n", end="")
+        calibration = f"[ KALIBRIERUNG: [{'█' * int(correct_guesses_percentage // 10)}{'-' * int(10 - correct_guesses_percentage // 10)}] {correct_guesses_percentage:.2f}% ]"
+        print(f"{calibration:<40}{'/ˉˉˉˉˉ〔Erde〕ˉˉˉˉˉ\\':^30}")
+
+        print(f"[ IDENTIFIKATION: \n{hidden_word} ]")
+
+        self.__current_num_of_correct_hits = 0
+        self.__current_num_of_faulty_hits = 0
 
 class SolidHasHit(Exception):
-    def __init__(self):
-        super().__init__()
+    def __init__(self) -> None:
+        pass

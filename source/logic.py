@@ -1,58 +1,56 @@
+import os
 from word_retriever import WordRetriever
 from story import Story, SolidHasHit
-import os
-import sys
 
 class Logic:
-    def __init__(self):
+    def __init__(self) -> None:
         self.wordretriever = WordRetriever()
 
-    def play(self):
+    def play(self) -> None:
         word = self.wordretriever.get_word()
         single_play = SinglePlay(word)
         print(word)
+
+        single_play.guess_once(True)
         while True:
             try:
                 os.system("clear")
-                
+
                 single_play.guess_once()
             except SolidHasHit:
-                print("💥")
                 os.kill(os.getpid(), 14)
                 break
 
-def validate_input(input: str) -> bool:
+def validate_input(input_str: str) -> str:
     """
     Purpose: removes leading 
     """
-    def remove_unwanted_characters(character: str):
-        return True if character.isalpha() else False
-
-    return "".join(filter(remove_unwanted_characters, input)).strip().lower()
+    return "".join(filter(lambda char: char.isalpha(), input_str)).strip().lower()
 
 
 class SinglePlay:
-    def __init__(self, word: str):
+    def __init__(self, word: str) -> None:
         self.word_list = list(word)
         self.word_list_lowererd_set = set(word.lower().replace(" ", ""))
         self.correct_guesses = set([])
         self.faulty_guesses = set([])
 
         self.story = Story()
-    
-    def guess_once(self):
-        self.story.display_last_guess_stats(self.correct_guesses, self.faulty_guesses)
-        self.display_word()
+
+    def guess_once(self, is_first_guess: bool = False) -> None:
+        """
+        Purpose: Let's the player guess one word/character. Also shows story stuff.
+        If it's the first_guess, we don't want to display that the guess was invalid.
+        """
+        hidden_word = self.get_word()
+        correct_guesses_ratio =  len(self.correct_guesses) / len(self.word_list_lowererd_set)
+        self.story.display_last_guess_stats(self.correct_guesses, self.faulty_guesses, hidden_word, correct_guesses_ratio, is_first_guess)
         user_input = input("Dein guess:")
         self.add_input(validate_input(user_input))
 
-    def add_input(self, user_input: str) -> int:
+    def add_input(self, user_input: str) -> None:
         """
         Purpose: adds the characters from the input to the internal correct/fauly guesses-list.
-        Returns:
-            0 if character(s) was/were correctly guessed
-            1 if character(s) was/were already guessed
-            2 if at least one character was wrongly guessed
         """
         for character in user_input:
             if character in self.word_list_lowererd_set:
@@ -68,9 +66,9 @@ class SinglePlay:
         if len(self.correct_guesses) == len(self.word_list_lowererd_set):
             self.story.handle_earth_saved()
 
-    def display_word(self):
+    def get_word(self) -> str:
         """
-        Purpose: displays the word and hides the characters not guessed yet.
+        Purpose: returns the word and hides the characters not guessed yet.
         """
         word = ""
         for c in self.word_list:
@@ -83,4 +81,4 @@ class SinglePlay:
                 word += "_"
                 word += " "
 
-        print(word)
+        return word
