@@ -1,0 +1,3 @@
+[MAIN]
+# ignore tests files because they are not part of the actual code
+ignore-patterns=tests
