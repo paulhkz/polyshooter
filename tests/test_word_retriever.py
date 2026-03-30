@@ -1,4 +1,4 @@
-"""Tests for source/word_retriever.py"""
+"""source/word_retriever.py"""
 import sys
 import os
 import unittest
@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'source'))
 from word_retriever import replace_special_chars, get_word_repo
 
 class TestReplaceSpecialChars(unittest.TestCase):
-    """Tests for the replace_special_chars function."""
+    """replace_special_chars"""
 
     def test_ae(self):
         self.assertEqual(replace_special_chars("ä"), "ae")
@@ -34,7 +34,7 @@ class TestReplaceSpecialChars(unittest.TestCase):
         self.assertEqual(replace_special_chars("(Cube)"), "Cube")
 
 class TestGetWordRepo(unittest.TestCase):
-    """Tests for the get_word_repo function."""
+    """get_word_repo"""
 
     # patch random.shuffle to do nothing
     @patch('source.word_retriever.random.shuffle', lambda lst: None)
