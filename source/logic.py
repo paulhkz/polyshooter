@@ -122,6 +122,6 @@ class SinglePlay:
 
 def validate_input(input_str: str) -> str:
     """
-    Purpose: removes leading 
+    Purpose: filters the input for non-alphabetic characters, trims it and lower-cases it
     """
     return "".join(filter(lambda char: char.isalpha(), input_str)).strip().lower()
