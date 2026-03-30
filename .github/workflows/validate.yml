@@ -1,4 +1,4 @@
-name: Pylint
+name: Pylint, Mypy and Coverage
 
 on: [push]
 
@@ -21,7 +21,7 @@ jobs:
       - name: Analysing the code with pylint
         if: always()
         run: |
-          pylint $(git ls-files '*.py')
+          pylint source/
       - name: Analysing the code with mypy
         if: always()
         run: |
