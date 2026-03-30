@@ -7,78 +7,109 @@ from story import Story, SolidHasHit
 
 WORD_REPO_NAME = "wordrepo.txt"
 
+def run_guess_loop(single_play: SinglePlay, word: str, heading_to_player: bool) -> bool:
+    """
+    Purpose: run the guess loop for one word.
+    Returns True if the player won, False if SolidHasHit was raised.
+    If heading_to_player is True, kills the process on SolidHasHit instead of returning False.
+    """
+    single_play.guess_once(True)
+    while True:
+        try:
+            os.system("clear")
+            if single_play.guess_once():
+                return True
+        except SolidHasHit:
+            if heading_to_player:
+                os.kill(os.getpid(), 14)
+            print("Oh oh. Der Körper ist eingeschlagen.")
+            print(
+                "Es stellt sich unter genauerer Untersuchung heraus, "
+                f"dass es den Namen '{word}' hatte."
+            )
+            os.system("sleep 7")
+            return False
+
+
 def play_game() -> None:
     """
     Purpose: entry for the game play
     """
     word_repo = get_word_repo(WORD_REPO_NAME)
+
     word = word_repo.pop()
     single_play = SinglePlay(word)
-    print(word)
+    single_play.story.show_prelude()
+    run_guess_loop(single_play, word, heading_to_player=True)
 
-    single_play.guess_once(True)
-    while True:
-        try:
-            os.system("clear")
-
-            single_play.guess_once()
-        except SolidHasHit:
-            os.kill(os.getpid(), 14)
+    while len(word_repo) > 0:
+        word = word_repo.pop()
+        single_play = SinglePlay(word)
+        if not single_play.story.show_continuing_scene():
             break
+        os.system("clear")
+        run_guess_loop(single_play, word, heading_to_player=False)
 
 class SinglePlay:
     """
     Purpose: a class having all the relevant information for a single play-through
     """
     def __init__(self, word: str) -> None:
-        self.word_list = list(word)
-        self.word_list_lowererd_set = set(word.lower().replace(" ", ""))
-        self.correct_guesses: set[str] = set([])
-        self.faulty_guesses: set[str] = set([])
+        self.__word_list = list(word)
+        self.__word_list_lowererd_set = set(word.lower().replace(" ", ""))
+        self.__correct_guesses: set[str] = set([])
+        self.__faulty_guesses: set[str] = set([])
 
         self.story = Story()
 
-    def guess_once(self, is_first_guess: bool = False) -> None:
+    def guess_once(self, is_first_guess: bool = False) -> bool:
         """
         Purpose: Let's the player guess one word/character. Also shows story stuff.
         If it's the first_guess, we don't want to display that the guess was invalid.
+        Returns True if the player has won, False otherwise.
+        Throws a SolidHasHit-Exception if the body hit the ground.
         """
         hidden_word = self.get_word()
         correct_guesses_ratio = (
-            len(self.correct_guesses) / len(self.word_list_lowererd_set)
+            len(self.__correct_guesses) / len(self.__word_list_lowererd_set)
         )
         self.story.display_guess_feedback(
-            self.correct_guesses, self.faulty_guesses, is_first_guess
+            self.__correct_guesses, self.__faulty_guesses, is_first_guess
         )
         self.story.display_calibration(hidden_word, correct_guesses_ratio)
         user_input = input("Dein guess:")
-        self.add_input(validate_input(user_input))
+        if self.add_input(validate_input(user_input)):
+            return True
+        return False
 
-    def add_input(self, user_input: str) -> None:
+    def add_input(self, user_input: str) -> bool:
         """
         Purpose: adds the characters from the input to the internal correct/fauly guesses-list.
+        Returns True if the player has won. False otherwise.
         """
         for character in user_input:
-            if character in self.word_list_lowererd_set:
-                if character not in self.correct_guesses:
-                    self.correct_guesses.add(character)
+            if character in self.__word_list_lowererd_set:
+                if character not in self.__correct_guesses:
+                    self.__correct_guesses.add(character)
                     self.story.handle_correct_guess()
 
             else:
-                if character not in self.faulty_guesses:
-                    self.faulty_guesses.add(character)
+                if character not in self.__faulty_guesses:
+                    self.__faulty_guesses.add(character)
                     self.story.handle_incorrect_guess()
 
-        if len(self.correct_guesses) == len(self.word_list_lowererd_set):
-            self.story.handle_earth_saved()
+        if len(self.__correct_guesses) == len(self.__word_list_lowererd_set):
+            self.story.handle_earth_saved("".join(self.__word_list))
+            return True
+        return False
 
     def get_word(self) -> str:
         """
         Purpose: returns the word and hides the characters not guessed yet.
         """
         word = ""
-        for c in self.word_list:
-            if c.lower() in self.correct_guesses:
+        for c in self.__word_list:
+            if c.lower() in self.__correct_guesses:
                 word += c
                 word += " "
             elif c.isspace():

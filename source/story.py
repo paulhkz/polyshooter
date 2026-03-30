@@ -7,17 +7,14 @@ class Story:
     """handles the narrative and display logic of the game"""
 
     def __init__(self) -> None:
-        self.rem_guesses = DEFAULT_ATTEMPTS
+        self.__rem_guesses = DEFAULT_ATTEMPTS
         self.__current_num_of_correct_hits = 0
         self.__current_num_of_faulty_hits = 0
-
-        self.show_prelude()
 
     def show_prelude(self) -> None:
         """
         Purpose: show story prelude
         """
-        os.system("clear")
         os.system("clear")
 
         print("""
@@ -58,9 +55,27 @@ class Story:
 
         user_input = input(f"\r{'Enter drücken, um zu starten':>150}")
         os.system("clear")
+
+    def show_continuing_scene(self) -> bool:
+        """
+        Purpose: Shows the scene whether the player want's to continue or not.
+        Returns the player's decision
+        """
         os.system("clear")
+        print("""
+        Wie es aussieht kommen noch mehr Körper auf die Erde zu!
+        Er kommt zum Glück aber nicht auf dein Team zu.
+        Ihr habt die Chance, die Mission fortzuführen oder
+        an die Betroffenen weiterzuleiten.
 
+        """)
 
+        decision = input("Weitermachen? [y]/n: ")
+
+        if decision == "y":
+            return True
+        print("Alles klar.")
+        return False
 
     def handle_correct_guess(self) -> None:
         """
@@ -72,24 +87,43 @@ class Story:
         """
         Purpose: handle incorrect guess and check for game over
         """
-        self.rem_guesses -= 1
-        if self.rem_guesses == 0:
-            self.handle_game_over()
+        self.__rem_guesses -= 1
+        if self.__rem_guesses == 0:
+            self.__handle_game_over()
         else:
             self.__current_num_of_faulty_hits += 1
 
 
-    def handle_game_over(self) -> None:
+    def __handle_game_over(self) -> None:
         """
         Purpose: display game over message and raise SolidHasHit
         """
         print(f"{'':💥<20}")
         raise SolidHasHit
 
-    def handle_earth_saved(self) -> None:
+    def handle_earth_saved(self, word: str) -> None:
         """
-        Purpose: handle successful completion of the game
+        Purpose: print fire-sequence
         """
+        os.system("clear")
+        print("Initialisieren des LASER-Schusses...")
+        os.system("sleep 1") # no time-module allowed
+
+        os.system("clear")
+        print("Feuer in")
+        os.system("sleep 1") # no time-module allowed
+        print("3")
+        os.system("sleep 1") # no time-module allowed
+        print("2")
+        os.system("sleep 1") # no time-module allowed
+        print("1")
+        os.system("sleep 1")
+        print("Abschuss.")
+        os.system("sleep 2")
+
+        os.system("clear")
+        print(f"TREFFER! Der Körper ({word}) wurde getroffen! Gratulation!")
+        os.system("sleep 3")
 
     def display_guess_feedback(
         self,
@@ -140,15 +174,15 @@ class Story:
         """
         Purpose: display distance/calibration stats and the hidden word
         """
-        distance = f"[ DISTANZ: {self.rem_guesses * 12}.000 km ]"
+        distance = f"[ DISTANZ: {self.__rem_guesses * 12}.000 km ]"
         percentage = correct_guesses_ratio * 100
 
         print(f"{distance:<40}", end="")
         gap = f"\n{' ' * 40}"
-        print((DEFAULT_ATTEMPTS - self.rem_guesses) * 2 * gap, end="")
+        print((DEFAULT_ATTEMPTS - self.__rem_guesses) * 2 * gap, end="")
 
         print(f"{'〔Körper〕':^30}")
-        print((self.rem_guesses * 2 - 1) * "\n", end="")
+        print((self.__rem_guesses * 2 - 1) * "\n", end="")
         filled = int(percentage // 10)
         empty = int(10 - percentage // 10)
         calibration = (

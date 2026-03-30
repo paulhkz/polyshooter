@@ -23,12 +23,12 @@ def get_word_repo(file_name: str) -> list[str]:
         print("Etwas ist schiefgelaufen beim Öffnen der Datei")
 
     random.shuffle(word_repo)
-    word_repo = [replace_umlauts(word) for word in word_repo]
+    word_repo = [replace_special_chars(word) for word in word_repo]
     return word_repo
 
-def replace_umlauts(word: str) -> str:
+def replace_special_chars(word: str) -> str:
     """
-    Purpose: replaces the umlauts/diacritics of a word
+    Purpose: replaces the umlauts and removes braces in a word
     """
     word = word.replace("ä", "ae")
     word = word.replace("ö", "oe")
@@ -36,5 +36,9 @@ def replace_umlauts(word: str) -> str:
     word = word.replace("Ä", "Ae")
     word = word.replace("Ö", "Oe")
     word = word.replace("Ü", "Ue")
+    word = word.replace("ß", "ss")
+
+    word = word.replace("(", "")
+    word = word.replace(")", "")
 
     return word
