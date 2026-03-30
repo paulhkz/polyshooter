@@ -2,6 +2,15 @@
 
 A simple Python-CLI hangman-like game to guess [Johnson-Solids](https://en.wikipedia.org/wiki/Johnson_solid).
 
+- [Polyshooter](#polyshooter)
+  - [Setup \& Run](#setup--run)
+    - [1. Clone the repo](#1-clone-the-repo)
+    - [2. Create virtual environment](#2-create-virtual-environment)
+    - [3. Activate the virtual environment](#3-activate-the-virtual-environment)
+    - [4. Install dependencies](#4-install-dependencies)
+    - [5. Run the game](#5-run-the-game)
+    - [Optional — tests / linting / type checking](#optional--tests--linting--type-checking)
+
 ## Setup & Run
 
 ### 1. Clone the repo
