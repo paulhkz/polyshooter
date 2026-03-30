@@ -14,6 +14,5 @@ class TestMain(unittest.TestCase):
         main()
         mock_play_game.assert_called_once()
 
-
 if __name__ == '__main__':
     unittest.main()
