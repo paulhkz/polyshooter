@@ -73,7 +73,7 @@ class TestSinglePlayAddInput(unittest.TestCase):
     @patch('builtins.print')
     def test_game_over_after_enough_wrong_guesses(self, _mock_print):
         with self.assertRaises(SolidHasHit):
-            self.play._SinglePlay__add_input("zxqvmn")
+            self.play._SinglePlay__add_input("zxqvsmn")
 
 class TestSinglePlayGuessOnce(unittest.TestCase):
     """SinglePlay.guess_once"""

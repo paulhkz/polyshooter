@@ -1,7 +1,7 @@
 """Module for managing game story and narrative elements."""
 import os
 
-MAX_ATTEMPTS = 6
+MAX_ATTEMPTS = 7 # number of attempts before the johnson-solid hits the earth minus one
 
 class Story:
     """handles the narrative and display logic of the game"""
@@ -111,11 +111,11 @@ class Story:
 
         os.system("clear")
         print("Feuer in")
-        os.system("sleep 1") # no time-module allowed
+        os.system("sleep 1")
         print("3")
-        os.system("sleep 1") # no time-module allowed
+        os.system("sleep 1")
         print("2")
-        os.system("sleep 1") # no time-module allowed
+        os.system("sleep 1")
         print("1")
         os.system("sleep 1")
         print("Abschuss.")
