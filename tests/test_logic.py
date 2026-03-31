@@ -28,52 +28,52 @@ class TestValidateInput(unittest.TestCase):
         self.assertEqual(validate_input(""), "")
 
 class TestSinglePlayGetWord(unittest.TestCase):
-    """SinglePlay.get_word"""
+    """SinglePlay._SinglePlay__get_word"""
 
     def test_all_hidden_initially(self):
         play = SinglePlay("word")
-        self.assertEqual(play.get_word(), "_ _ _ _ ")
+        self.assertEqual(play._SinglePlay__get_word(), "_ _ _ _ ")
 
     def test_guessed_letter_revealed(self):
         play = SinglePlay("wword")
         play._SinglePlay__correct_guesses.add('w')
-        self.assertEqual(play.get_word(), "w w _ _ _ ")
+        self.assertEqual(play._SinglePlay__get_word(), "w w _ _ _ ")
 
     def test_all_letters_revealed(self):
         play = SinglePlay("word")
         play._SinglePlay__correct_guesses = {'w', 'o', 'r', 'd'}
-        self.assertEqual(play.get_word(), "w o r d ")
+        self.assertEqual(play._SinglePlay__get_word(), "w o r d ")
 
     def test_space_in_word_becomes_newline(self):
         play = SinglePlay("a b")
-        self.assertIn("\n", play.get_word())
+        self.assertIn("\n", play._SinglePlay__get_word())
 
 class TestSinglePlayAddInput(unittest.TestCase):
-    """SinglePlay.add_input"""
+    """SinglePlay._SinglePlay__add_input"""
 
     def setUp(self):
         self.play = SinglePlay("word")
 
     def test_correct_letter_added_to_correct_guesses(self):
-        self.play.add_input("w")
+        self.play._SinglePlay__add_input("w")
         self.assertIn("w", self.play._SinglePlay__correct_guesses)
 
     def test_wrong_letter_added_to_faulty_guesses(self):
-        self.play.add_input("z")
+        self.play._SinglePlay__add_input("z")
         self.assertIn("z", self.play._SinglePlay__faulty_guesses)
 
     def test_partial_correct_guess_returns_false(self):
-        self.assertFalse(self.play.add_input("w"))
+        self.assertFalse(self.play._SinglePlay__add_input("w"))
 
     @patch('os.system')
     @patch('builtins.print')
     def test_all_letters_guessed_returns_true(self, _mock_print, _mock_os):
-        self.assertTrue(self.play.add_input("word"))
+        self.assertTrue(self.play._SinglePlay__add_input("word"))
 
     @patch('builtins.print')
     def test_game_over_after_enough_wrong_guesses(self, _mock_print):
         with self.assertRaises(SolidHasHit):
-            self.play.add_input("zxqv")
+            self.play._SinglePlay__add_input("zxqv")
 
 class TestSinglePlayGuessOnce(unittest.TestCase):
     """SinglePlay.guess_once"""

@@ -56,7 +56,7 @@ class SinglePlay:
     """
     def __init__(self, word: str) -> None:
         self.__word_list = list(word)
-        self.__word_list_lowererd_set = set(word.lower().replace(" ", ""))
+        self.__word_list_lowered_set = set(word.lower().replace(" ", ""))
         self.__correct_guesses: set[str] = set([])
         self.__faulty_guesses: set[str] = set([])
 
@@ -69,26 +69,26 @@ class SinglePlay:
         Returns True if the player has won, False otherwise.
         Throws a SolidHasHit-Exception if the body hit the ground.
         """
-        hidden_word = self.get_word()
+        hidden_word = self.__get_word()
         correct_guesses_ratio = (
-            len(self.__correct_guesses) / len(self.__word_list_lowererd_set)
+            len(self.__correct_guesses) / len(self.__word_list_lowered_set)
         )
         self.story.display_guess_feedback(
             self.__correct_guesses, self.__faulty_guesses, is_first_guess
         )
         self.story.display_calibration(hidden_word, correct_guesses_ratio)
         user_input = input("Dein guess:")
-        if self.add_input(validate_input(user_input)):
+        if self.__add_input(validate_input(user_input)):
             return True
         return False
 
-    def add_input(self, user_input: str) -> bool:
+    def __add_input(self, user_input: str) -> bool:
         """
-        Purpose: adds the characters from the input to the internal correct/fauly guesses-list.
+        Purpose: adds the characters from the input to the internal correct/faulty guesses-list.
         Returns True if the player has won. False otherwise.
         """
         for character in user_input:
-            if character in self.__word_list_lowererd_set:
+            if character in self.__word_list_lowered_set:
                 if character not in self.__correct_guesses:
                     self.__correct_guesses.add(character)
                     self.story.handle_correct_guess()
@@ -98,12 +98,12 @@ class SinglePlay:
                     self.__faulty_guesses.add(character)
                     self.story.handle_incorrect_guess()
 
-        if len(self.__correct_guesses) == len(self.__word_list_lowererd_set):
+        if len(self.__correct_guesses) == len(self.__word_list_lowered_set):
             self.story.handle_earth_saved("".join(self.__word_list))
             return True
         return False
 
-    def get_word(self) -> str:
+    def __get_word(self) -> str:
         """
         Purpose: returns the word and hides the characters not guessed yet.
         """
