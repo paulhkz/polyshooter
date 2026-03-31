@@ -1,13 +1,13 @@
 """Module for managing game story and narrative elements."""
 import os
 
-DEFAULT_ATTEMPTS = 4
+MAX_ATTEMPTS = 6
 
 class Story:
     """handles the narrative and display logic of the game"""
 
     def __init__(self) -> None:
-        self.__rem_guesses = DEFAULT_ATTEMPTS
+        self.__rem_guesses = MAX_ATTEMPTS
         self.__current_num_of_correct_hits = 0
         self.__current_num_of_faulty_hits = 0
 
@@ -179,7 +179,7 @@ class Story:
 
         print(f"{distance:<40}", end="")
         gap = f"\n{' ' * 40}"
-        print((DEFAULT_ATTEMPTS - self.__rem_guesses) * 2 * gap, end="")
+        print((MAX_ATTEMPTS - self.__rem_guesses) * 2 * gap, end="")
 
         print(f"{'〔Körper〕':^30}")
         print((self.__rem_guesses * 2 - 1) * "\n", end="")

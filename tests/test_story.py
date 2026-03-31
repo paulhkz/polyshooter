@@ -2,7 +2,7 @@
 import unittest
 from unittest.mock import patch
 
-from source.story import Story, SolidHasHit, DEFAULT_ATTEMPTS
+from source.story import Story, SolidHasHit, MAX_ATTEMPTS
 
 class TestStoryGuessHandling(unittest.TestCase):
     """correct/incorrect guess-tracking"""
@@ -13,14 +13,14 @@ class TestStoryGuessHandling(unittest.TestCase):
 
     def test_incorrect_guess_below_limit_does_not_raise(self):
         story = Story()
-        for _ in range(DEFAULT_ATTEMPTS - 1):
+        for _ in range(MAX_ATTEMPTS - 1):
             story.handle_incorrect_guess()
 
     @patch('builtins.print')
     def test_game_over_raised_after_max_incorrect_guesses(self, _mock_print):
         story = Story()
         with self.assertRaises(SolidHasHit):
-            for _ in range(DEFAULT_ATTEMPTS):
+            for _ in range(MAX_ATTEMPTS):
                 story.handle_incorrect_guess()
 
 class TestStoryDisplayFeedback(unittest.TestCase):
