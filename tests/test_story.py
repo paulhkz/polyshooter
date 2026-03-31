@@ -50,15 +50,6 @@ class TestStoryDisplayFeedback(unittest.TestCase):
         self.assertIn("Richtig", output)
 
     @patch('builtins.print')
-    def test_multiple_correct_hits_shows_count(self, mock_print):
-        story = Story()
-        story.handle_correct_guess()
-        story.handle_correct_guess()
-        story.display_guess_feedback({'a', 'b'}, set(), is_first_guess=False)
-        output = " ".join(str(c) for c in mock_print.call_args_list)
-        self.assertIn("2 Mal", output)
-
-    @patch('builtins.print')
     def test_single_faulty_hit_prints_oh_nein(self, mock_print):
         story = Story()
         story.handle_incorrect_guess()
@@ -67,20 +58,11 @@ class TestStoryDisplayFeedback(unittest.TestCase):
         self.assertIn("Oh nein", output)
 
     @patch('builtins.print')
-    def test_multiple_faulty_hits_shows_count(self, mock_print):
-        story = Story()
-        story.handle_incorrect_guess()
-        story.handle_incorrect_guess()
-        story.display_guess_feedback(set(), {'z', 'x'}, is_first_guess=False)
-        output = " ".join(str(c) for c in mock_print.call_args_list)
-        self.assertIn("2 Mal", output)
-
-    @patch('builtins.print')
     def test_hit_counters_reset_after_display(self, _mock_print):
         story = Story()
         story.handle_correct_guess()
         story.display_guess_feedback({'a'}, set(), is_first_guess=False)
-        # second call should show "Nichts" since counters were reset
+        # second call should show "Nichts" since flags were reset
         story.display_guess_feedback({'a'}, set(), is_first_guess=False)
         last_output = " ".join(
             str(c) for c in _mock_print.call_args_list

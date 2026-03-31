@@ -8,8 +8,7 @@ class Story:
 
     def __init__(self) -> None:
         self.__rem_guesses = MAX_ATTEMPTS
-        self.__current_num_of_correct_hits = 0
-        self.__current_num_of_faulty_hits = 0
+        self.__was_correct_guess = 0 # 0 = no guess yet, 1 = correct guess, -1 = incorrect guess
 
     def show_prelude(self) -> None:
         """
@@ -25,7 +24,7 @@ class Story:
 
         skip_prompt = (
             'Enter drücken um weiter zu gehen, '
-            '"s", um die Story zu überspringen'
+            '"s", um die Story zu überspringen '
         )
         user_input = input(f"\r{skip_prompt:>150}")
         if user_input.lower().strip() == 's':
@@ -81,7 +80,7 @@ class Story:
         """
         Purpose: increment correct hit counter
         """
-        self.__current_num_of_correct_hits += 1
+        self.__was_correct_guess = 1
 
     def handle_incorrect_guess(self) -> None:
         """
@@ -91,14 +90,13 @@ class Story:
         if self.__rem_guesses == 0:
             self.__handle_game_over()
         else:
-            self.__current_num_of_faulty_hits += 1
+            self.__was_correct_guess = -1
 
 
     def __handle_game_over(self) -> None:
         """
         Purpose: display game over message and raise SolidHasHit
         """
-        print(f"{'':💥<20}")
         raise SolidHasHit
 
     def handle_earth_saved(self, word: str) -> None:
@@ -122,7 +120,7 @@ class Story:
         os.system("sleep 2")
 
         os.system("clear")
-        print(f"TREFFER! Der Körper ({word}) wurde getroffen! Gratulation!")
+        print(f"TREFFER! Der Körper Namens '{word}' wurde getroffen! Gratulation!")
         os.system("sleep 3")
 
     def display_guess_feedback(
@@ -134,37 +132,20 @@ class Story:
         """
         Purpose: display guessing-feedback and known/unknown letters
         """
-        if self.__current_num_of_correct_hits == 1:
+        if self.__was_correct_guess == 1:
             print("Richtig! Der LASER konnte sich weiter kalibrieren.")
-        elif self.__current_num_of_correct_hits > 1:
-            print(
-                f"Der LASER hat sich gerade "
-                f"{self.__current_num_of_correct_hits} Mal "
-                f"kalibrieren können!"
-            )
-
-        if self.__current_num_of_faulty_hits == 1:
+        elif self.__was_correct_guess == -1:
             print(
                 "Oh nein, der LASER konnte sich nicht "
                 "kalibrieren! Der Polyeder kommt immer näher!"
             )
-        elif self.__current_num_of_faulty_hits > 1:
-            print(
-                f"Du hast ganze "
-                f"{self.__current_num_of_faulty_hits} Mal "
-                f"falsch geraten! Pass auf, er kommt näher!"
-            )
-
-        if (not is_first_guess
-                and self.__current_num_of_correct_hits == 0
-                and self.__current_num_of_faulty_hits == 0):
+        elif not is_first_guess: # __was_correct_guess is 0
             print("Nichts ist passiert.")
 
         print(f"Korrekte Buchstaben: {", ".join(correct)}")
         print(f"Falsche Buchstaben: {" ".join(faulty)}")
 
-        self.__current_num_of_correct_hits = 0
-        self.__current_num_of_faulty_hits = 0
+        self.__was_correct_guess = 0
 
     def display_calibration(
         self,

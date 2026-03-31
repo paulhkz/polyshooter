@@ -19,7 +19,7 @@ class TestValidateInput(unittest.TestCase):
         self.assertEqual(validate_input("a1b!c?"), "abc")
 
     def test_spaces_removed(self):
-        self.assertEqual(validate_input("a b c"), "abc")
+        self.assertEqual(validate_input(" ai b c"), "ai b c")
 
     def test_numbers_removed(self):
         self.assertEqual(validate_input("1234"), "")

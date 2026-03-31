@@ -21,9 +21,10 @@ def run_guess_loop(single_play: SinglePlay, word: str, heading_to_player: bool) 
                 return True
 
     except SolidHasHit:
+        print(f"Oh oh. Der Körper Namens '{word}' ist eingeschlagen.")
+        print(f"{'':💥<20}")
         if heading_to_player:
             os.kill(os.getpid(), 14)
-        print("Oh oh. Der Körper ist eingeschlagen.")
         print(
             "Es stellt sich unter genauerer Untersuchung heraus, "
             f"dass es den Namen '{word}' hatte."
@@ -101,27 +102,45 @@ class SinglePlay:
 
     def __add_input(self, user_input: str) -> bool:
         """
-        Purpose: adds the characters from the input to the internal correct/faulty guesses-list.
+        Purpose: adds the character from the input to the internal correct/faulty guesses-list.
+        If the input is more than one character, it is treated as a guess for the whole word.
+        If there's a mismatch, the player has lost.
         Returns True if the player has won. False otherwise.
         """
-        for character in user_input:
-            if character in self.__word_list_lowered_set:
-                if character not in self.__correct_guesses:
-                    self.__correct_guesses.add(character)
-                    self.story.handle_correct_guess()
-
+        if len(user_input) > 1:
+            # user guessed the whole word
+            if user_input == self.__get_whole_word().lower():
+                self.__correct_guesses = self.__word_list_lowered_set
+                self.story.handle_earth_saved(self.__get_whole_word())
+                return True
             else:
-                if character not in self.__faulty_guesses:
-                    self.__faulty_guesses.add(character)
+                raise SolidHasHit
+
+        elif len(user_input) == 1:
+            # user guessed single character
+            if user_input in self.__word_list_lowered_set:
+                if user_input not in self.__correct_guesses:
+                    self.__correct_guesses.add(user_input)
+                    self.story.handle_correct_guess()
+            else:
+                if user_input not in self.__faulty_guesses:
+                    self.__faulty_guesses.add(user_input)
                     self.story.handle_incorrect_guess()
 
         if len(self.__correct_guesses) == len(self.__word_list_lowered_set):
-            self.story.handle_earth_saved("".join(self.__word_list))
+            self.story.handle_earth_saved(self.__get_whole_word())
             return True
+
         return False
+    
+    def __get_whole_word(self) -> str:
+        """
+        Purpose: returns the whole word as a string
+        """
+        return "".join(self.__word_list)
 
 def validate_input(input_str: str) -> str:
     """
     Purpose: filters the input for non-alphabetic characters, trims it and lower-cases it
     """
-    return "".join(filter(lambda char: char.isalpha(), input_str)).strip().lower()
+    return "".join(filter(lambda char: char.isalpha() or char.isspace(), input_str)).lower().strip()
