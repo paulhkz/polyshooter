@@ -8,8 +8,9 @@ A simple Python-CLI hangman-like game to guess [Johnson-Solids](https://en.wikip
     - [2. Create virtual environment](#2-create-virtual-environment)
     - [3. Activate the virtual environment](#3-activate-the-virtual-environment)
     - [4. Install dependencies](#4-install-dependencies)
-    - [5. Run the game](#5-run-the-game)
+    - [5. Run the game (auch ohne vorherige Schritte möglich)](#5-run-the-game-auch-ohne-vorherige-schritte-möglich)
     - [Optional — tests / linting / type checking](#optional--tests--linting--type-checking)
+  - [Lizenz](#lizenz)
 
 ## Setup & Run
 
@@ -37,7 +38,7 @@ source .venv/bin/activate
 pip3.14 install -r requirements.txt
 ```
 
-### 5. Run the game
+### 5. Run the game (auch ohne vorherige Schritte möglich)
 
 ```bash
 python3.14 source/game.py
@@ -53,5 +54,9 @@ python3.14 -m coverage run --source=source -m unittest discover tests/ && python
 pylint source/ # lint
 mypy . # type check
 ```
+
+## Lizenz
+
+MIT
 
 Good luck & have fun.
