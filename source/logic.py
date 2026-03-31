@@ -16,9 +16,9 @@ def run_guess_loop(single_play: SinglePlay, word: str, heading_to_player: bool) 
     try:
         single_play.guess_once(True)
         while True:
-                os.system("clear")
-                if single_play.guess_once():
-                    return True
+            os.system("clear")
+            if single_play.guess_once():
+                return True
 
     except SolidHasHit:
         if heading_to_player:
