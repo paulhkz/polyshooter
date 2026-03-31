@@ -231,6 +231,8 @@ flowchart TD
 
 ## 5. Code-Analyse-Ergebnisse
 
+Die Code-Qualität wird durch eine CI-Pipeline auf GitHub sichergestellt. Bei jedem Push wird automatisch ein Workflow (validate.yml) ausgeführt, der Pylint, MyPy und die Tests mit Coverage auf Python 3.14 ausführt. Die Coverage muss dabei mindestens 75% betragen, sonst schlägt die Pipeline fehl.
+
 ### Testergebnisse / Coverage
 
 ```txt
