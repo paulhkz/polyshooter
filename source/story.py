@@ -1,7 +1,7 @@
 """Module for managing game story and narrative elements."""
 import os
 
-MAX_ATTEMPTS = 7 # number of attempts before the johnson-solid hits the earth minus one
+MAX_ATTEMPTS = 7 # number of attempts before the johnson-solid hits the earth
 
 class Story:
     """handles the narrative and display logic of the game"""
@@ -69,9 +69,9 @@ class Story:
 
         """)
 
-        decision = input("Weitermachen? [y]/n: ")
+        decision = input("Weitermachen? y/[n]: ")
 
-        if decision == "y":
+        if decision.strip().lower() == "y":
             return True
         print("Alles klar.")
         return False
