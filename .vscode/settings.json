@@ -2,5 +2,10 @@
     "cSpell.words": [
         "Polyshooter"
     ],
-    "cSpell.language": "en,de-DE"
+    "cSpell.language": "en,de-DE",
+    "markdown-pdf.displayHeaderFooter": true,
+    "markdown-pdf.headerTemplate": "<div></div>",
+    "markdown-pdf.footerTemplate": "<div style='font-size: 9px; width: 100%; display: flex; justify-content: space-between; padding: 0 1cm;'><span class='date'></span><span><span class='pageNumber'></span> / <span class='totalPages'></span></span></div>",
+    "markdown-pdf.styles": [],
+    "markdown-pdf.includeDefaultStyles": true
 }
