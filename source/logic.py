@@ -69,7 +69,7 @@ class SinglePlay:
         Returns True if the player has won, False otherwise.
         Throws a SolidHasHit-Exception if the body hit the ground.
         """
-        hidden_word = self.__get_word()
+        hidden_word = self.get_word()
         correct_guesses_ratio = (
             len(self.__correct_guesses) / len(self.__word_list_lowered_set)
         )
@@ -81,6 +81,23 @@ class SinglePlay:
         if self.__add_input(validate_input(user_input)):
             return True
         return False
+
+    def get_word(self) -> str:
+        """
+        Purpose: returns the word and hides the characters not guessed yet.
+        """
+        word = ""
+        for c in self.__word_list:
+            if c.lower() in self.__correct_guesses:
+                word += c
+                word += " "
+            elif c.isspace():
+                word += "\n"
+            else:
+                word += "_"
+                word += " "
+
+        return word
 
     def __add_input(self, user_input: str) -> bool:
         """
@@ -102,23 +119,6 @@ class SinglePlay:
             self.story.handle_earth_saved("".join(self.__word_list))
             return True
         return False
-
-    def __get_word(self) -> str:
-        """
-        Purpose: returns the word and hides the characters not guessed yet.
-        """
-        word = ""
-        for c in self.__word_list:
-            if c.lower() in self.__correct_guesses:
-                word += c
-                word += " "
-            elif c.isspace():
-                word += "\n"
-            else:
-                word += "_"
-                word += " "
-
-        return word
 
 def validate_input(input_str: str) -> str:
     """

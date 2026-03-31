@@ -28,25 +28,25 @@ class TestValidateInput(unittest.TestCase):
         self.assertEqual(validate_input(""), "")
 
 class TestSinglePlayGetWord(unittest.TestCase):
-    """SinglePlay._SinglePlay__get_word"""
+    """SinglePlay.get_word"""
 
     def test_all_hidden_initially(self):
         play = SinglePlay("word")
-        self.assertEqual(play._SinglePlay__get_word(), "_ _ _ _ ")
+        self.assertEqual(play.get_word(), "_ _ _ _ ")
 
     def test_guessed_letter_revealed(self):
         play = SinglePlay("wword")
         play._SinglePlay__correct_guesses.add('w')
-        self.assertEqual(play._SinglePlay__get_word(), "w w _ _ _ ")
+        self.assertEqual(play.get_word(), "w w _ _ _ ")
 
     def test_all_letters_revealed(self):
         play = SinglePlay("word")
         play._SinglePlay__correct_guesses = {'w', 'o', 'r', 'd'}
-        self.assertEqual(play._SinglePlay__get_word(), "w o r d ")
+        self.assertEqual(play.get_word(), "w o r d ")
 
     def test_space_in_word_becomes_newline(self):
         play = SinglePlay("a b")
-        self.assertIn("\n", play._SinglePlay__get_word())
+        self.assertIn("\n", play.get_word())
 
 class TestSinglePlayAddInput(unittest.TestCase):
     """SinglePlay._SinglePlay__add_input"""
