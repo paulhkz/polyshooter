@@ -113,8 +113,7 @@ class SinglePlay:
                 self.__correct_guesses = self.__word_list_lowered_set
                 self.story.handle_earth_saved(self.__get_whole_word())
                 return True
-            else:
-                raise SolidHasHit
+            raise SolidHasHit
 
         elif len(user_input) == 1:
             # user guessed single character
@@ -132,7 +131,7 @@ class SinglePlay:
             return True
 
         return False
-    
+
     def __get_whole_word(self) -> str:
         """
         Purpose: returns the whole word as a string
