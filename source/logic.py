@@ -13,23 +13,23 @@ def run_guess_loop(single_play: SinglePlay, word: str, heading_to_player: bool) 
     Returns True if the player won, False if SolidHasHit was raised.
     If heading_to_player is True, kills the process on SolidHasHit instead of returning False.
     """
-    single_play.guess_once(True)
-    while True:
-        try:
-            os.system("clear")
-            if single_play.guess_once():
-                return True
-        except SolidHasHit:
-            if heading_to_player:
-                os.kill(os.getpid(), 14)
-            print("Oh oh. Der Körper ist eingeschlagen.")
-            print(
-                "Es stellt sich unter genauerer Untersuchung heraus, "
-                f"dass es den Namen '{word}' hatte."
-            )
-            os.system("sleep 7")
-            return False
+    try:
+        single_play.guess_once(True)
+        while True:
+                os.system("clear")
+                if single_play.guess_once():
+                    return True
 
+    except SolidHasHit:
+        if heading_to_player:
+            os.kill(os.getpid(), 14)
+        print("Oh oh. Der Körper ist eingeschlagen.")
+        print(
+            "Es stellt sich unter genauerer Untersuchung heraus, "
+            f"dass es den Namen '{word}' hatte."
+        )
+        os.system("sleep 7")
+        return False
 
 def play_game() -> None:
     """
