@@ -115,7 +115,7 @@ class SinglePlay:
                 return True
             raise SolidHasHit
 
-        elif len(user_input) == 1:
+        if len(user_input) == 1:
             # user guessed single character
             if user_input in self.__word_list_lowered_set:
                 if user_input not in self.__correct_guesses:
